@@ -1,6 +1,8 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 
+from viewer.models import Movie
+
 # Create your views here.
 def hello(request, parametr):
     return HttpResponse(f"Hello, {parametr} World!")
@@ -11,6 +13,13 @@ def ahoj(request):
     hodnota = request.GET.get('hodnota', '')
     hodnota2 = request.GET.get('hodnota2', '')
     return HttpResponse(f"Data od uživatele jsou {hodnota} a {hodnota2}")
+
+def index(request):
+    return render(request, template_name="index.html")
+
+def movie_index(request):
+    movies = Movie.objects.all()
+    return render(request, template_name="movies/index.html", context={"movies" : movies})
 
 """
 GET: localhost:8000/movies?filter=year(2000)

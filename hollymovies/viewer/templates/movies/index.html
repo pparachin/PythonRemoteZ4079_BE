@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block content %}
+  <h1>Filmy</h1>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Název filmu</th>
+        <th>Rok vydání</th>
+        <th>Hodnocení</th>
+        <th>Popis</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for movie in movies %}
+        <tr>
+          <td>{{ movie.title }}</td>
+          <td>{{ movie.released }}</td>
+          <td>{{ movie.rating }}</td>
+          <td>{{ movie.description }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+
+{% endblock %}
