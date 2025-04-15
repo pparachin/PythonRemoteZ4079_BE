@@ -1,10 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "layout.html" %}
 
-</body>
-</html>
+{% block content %}
+<div class="card text-center">
+    <div class="card-header">
+        {{ movie.title }} ({{ movie.released }})
+    </div>
+    <div class="card-body">
+        <img src="..." class="card-img-top" alt="obrazek_filmu">
+        <h5 class="card-title">#</h5>
+        <p class="card-text">{{ movie.description }}</p>
+        <a href="#" class="btn btn-primary">Edit</a>
+    </div>
+    <div class="card-footer text-body-secondary">
+        {{ movie.created }}
+    </div>
+</div>
+{% endblock %}

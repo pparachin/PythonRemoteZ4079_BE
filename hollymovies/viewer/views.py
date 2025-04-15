@@ -25,6 +25,11 @@ def actor_index(request):
     actors = Actor.objects.all()
     return render(request, template_name="actors/index.html", context={"actors" : actors})
 
+def movie_detail(request):
+    movie_id = int(request.GET.get('movie_id', ''))
+    movie = Movie.objects.get(id=movie_id)
+    return render(request, template_name="movies/detail.html", context={"movie": movie})
+
 """
 GET: localhost:8000/movies?filter=year(2000)
 GET: 127.0.0.1:8000/ahoj?hodnota=test&hodnota2=test2
