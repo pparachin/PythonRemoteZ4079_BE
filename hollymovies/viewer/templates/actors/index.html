@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h1>Herci</h1>
+<table class="table">
+    <thead>
+    <tr>
+        <th>Jméno</th>
+        <th>Přijmení</th>
+        <th>Datum narození</th>
+        <th>Počet filmů v databázi</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for actor in actors %}
+    <tr>
+        <td>{{ actor.name }}</td>
+        <td>{{ actor.surname }}</td>
+        <td>{{ actor.birth_day|date:"j.E Y" }}</td>
+        <td>{{ actor.movie_count }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+
+{% endblock %}

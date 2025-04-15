@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 
-from viewer.models import Movie
+from viewer.models import Movie, Actor
 
 # Create your views here.
 def hello(request, parametr):
@@ -20,6 +20,10 @@ def index(request):
 def movie_index(request):
     movies = Movie.objects.all()
     return render(request, template_name="movies/index.html", context={"movies" : movies})
+
+def actor_index(request):
+    actors = Actor.objects.all()
+    return render(request, template_name="actors/index.html", context={"actors" : actors})
 
 """
 GET: localhost:8000/movies?filter=year(2000)

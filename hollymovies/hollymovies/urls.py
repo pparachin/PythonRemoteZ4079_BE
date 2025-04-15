@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from viewer.views import hello, ahoj, index, movie_index
+from viewer.views import hello, ahoj, index, movie_index, actor_index
 
 
 urlpatterns = [
@@ -24,5 +24,6 @@ urlpatterns = [
     path('hello/<parametr>', hello),
     path('ahoj/', ahoj),
     path('', index, name="index"),
-    path('/movies', movie_index, name="movies")
+    path('movies', movie_index, name="movies"),
+    path('actors', actor_index, name="actors")
 ]
