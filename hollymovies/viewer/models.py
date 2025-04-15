@@ -1,6 +1,6 @@
 from django.db.models import (
   DO_NOTHING, CharField, DateField, DateTimeField, ForeignKey, IntegerField,
-  Model, TextField, ManyToManyField, CASCADE, ImageField
+  Model, TextField, ManyToManyField, CASCADE, ImageField, SET_NULL
 )
 
 """
@@ -59,23 +59,6 @@ class Actor(Model):
   def __str__(self):
     return f"{self.name} {self.surname}"
 
-class Movie(Model):
-  title = CharField(max_length=128)
-  genre = ForeignKey(Genre, on_delete=DO_NOTHING, null=True, default=1)
-  rating = IntegerField()
-  released = IntegerField()
-  description = TextField()
-  poster_url = ImageField(null=True)
-  actor = ManyToManyField(Actor)
-  created = DateTimeField(auto_now_add=True, null=True)
-  updated = DateTimeField(auto_now_add=True, null=True)
-
-  def __repr__(self):
-    return '<Movie %s>' % self.title % self.released
-
-  def __str__(self):
-    return f"{self.title} ({self.released})"
-
 class Director(Model):
   name = CharField(max_length=128)
   surname = CharField(max_length=128)
@@ -90,6 +73,25 @@ class Director(Model):
 
   def __str__(self):
     return f"{self.name} {self.surname}"
+
+class Movie(Model):
+  title = CharField(max_length=128)
+  genre = ForeignKey(Genre, on_delete=DO_NOTHING, null=True, default=1)
+  rating = IntegerField()
+  released = IntegerField()
+  description = TextField()
+  poster_url = ImageField(null=True)
+  actor = ManyToManyField(Actor)
+  director = ForeignKey(Director, on_delete=SET_NULL, null=True, default=None)
+  created = DateTimeField(auto_now_add=True, null=True)
+  updated = DateTimeField(auto_now_add=True, null=True)
+
+  def __repr__(self):
+    return '<Movie %s>' % self.title % self.released
+
+  def __str__(self):
+    return f"{self.title} ({self.released})"
+
 
 class User(Model):
   username = CharField(max_length=128)
