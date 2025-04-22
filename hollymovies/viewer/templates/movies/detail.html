@@ -1,18 +1,37 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<div class="card text-center" style="">
-    <div class="card-header">
-        {{ movie.title }} ({{ movie.released }})
+<div class="card mt-5 col d-flex" style="width: 50rem;">
+    <div class="card-header text-center">
+        <h2>{{ movie.title }} ({{ movie.released }})</h2>
     </div>
     <div class="card-body">
-        <img src=".." class="card-img-top" alt="Obrázek filmu nenalezen">
-        <h5 class="card-title">Režisér: {{ movie.director.name }} {{ movie.director.surname }} ({{movie.director.birth_day}})</h5>
+        <div class="text-center">
+            <img src=".." class="card-img-top" alt="Obrázek filmu nenalezen">
+            <h5 class="card-title">Režisér:
+                <a href="{% url 'director_detail' %}?director_id={{ movie.director.id }}" class="link-offset-2 link-underline link-underline-opacity-0">
+                    {{ movie.director.name }} {{ movie.director.surname }} ({{movie.director.birth_day}})
+                </a>
+            </h5>
+            Obsazení filmu:
+            {% for actor in movie.actor.all %}
+                <a href="{% url 'actor_detail' %}?actor_id={{ actor.id }}" class="link-offset-2 link-underline link-underline-opacity-0">
+                    {% if movie.actor.all|length == forloop.counter %}
+                        {{ actor }}
+                    {% else %}
+                        {{ actor }},
+                    {% endif %}
+                </a>
+            {% endfor %}
+        </div>
+        <h4 class="mt-2">Popis filmu</h4>
         <p class="card-text">{{ movie.description }}</p>
-        <a href="#" class="btn btn-primary">Edit</a>
     </div>
     <div class="card-footer text-body-secondary">
-        {{ movie.created|date:"d.m.Y H:i:s" }}
+        <p class="text-center">{{ movie.created|date:"d.m.Y H:i:s" }}</p>
+        <span class="text-start"><a href="#" class="btn btn-primary">Edit</a></span>
+        <span class="text-end"><a href="#" class="btn btn-danger">Delete</a></span>
+
     </div>
 </div>
 {% endblock %}

@@ -87,7 +87,7 @@ class Movie(Model):
   updated = DateTimeField(auto_now_add=True, null=True)
 
   def __repr__(self):
-    return '<Movie %s>' % self.title % self.released
+    return '<Movie %s>' % self.title
 
   def __str__(self):
     return f"{self.title} ({self.released})"

@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 
-from viewer.models import Movie, Actor
+from viewer.models import Movie, Actor, Director
 
 # Create your views here.
 def hello(request, parametr):
@@ -29,6 +29,17 @@ def movie_detail(request):
     movie_id = int(request.GET.get('movie_id', ''))
     movie = Movie.objects.get(id=movie_id)
     return render(request, template_name="movies/detail.html", context={"movie": movie})
+
+def actor_detail(request):
+    actor_id = int(request.GET.get('actor_id', ''))
+    actor = Actor.objects.get(id=actor_id)
+    return render(request, template_name="actors/detail.html", context={"actor" : actor})
+
+def director_detail(request):
+    director_id = int(request.GET.get('director_id', ''))
+    director = Director.objects.get(id=director_id)
+    return render(request, template_name="directors/detail.html", context={"director" : director})
+
 
 """
 GET: localhost:8000/movies?filter=year(2000)

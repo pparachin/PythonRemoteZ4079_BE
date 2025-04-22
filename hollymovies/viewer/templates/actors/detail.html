@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="card text-center" style="">
+    <div class="card-header">
+        {{ actor.name }} {{ actor.surname }} ({{ actor.birth_day|date:"d.m.Y" }})
+    </div>
+    <div class="card-body">
+        <img src=".." class="card-img-top" alt="Obrázek filmu nenalezen">
+        <h5>Počet filmů: </h5>{{ actor.movie_count }}
+        <a href="#" class="btn btn-primary">Edit</a>
+    </div>
+    <div class="card-footer text-body-secondary">
+        {{ actor.created|date:"d.m.Y H:i:s" }}
+    </div>
+</div>
+{% endblock %}
