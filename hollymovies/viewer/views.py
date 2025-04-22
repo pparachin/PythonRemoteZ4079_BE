@@ -3,6 +3,8 @@ from django.shortcuts import render
 
 from viewer.models import Movie, Actor, Director
 
+from django.views.generic import TemplateView, ListView
+
 # Create your views here.
 def hello(request, parametr):
     return HttpResponse(f"Hello, {parametr} World!")
@@ -40,6 +42,14 @@ def director_detail(request):
     director = Director.objects.get(id=director_id)
     return render(request, template_name="directors/detail.html", context={"director" : director})
 
+"""
+ClassBased Views
+"""
+
+class MovieView(ListView):
+    model = Movie
+
+    template_name = "movies/index.html"
 
 """
 GET: localhost:8000/movies?filter=year(2000)

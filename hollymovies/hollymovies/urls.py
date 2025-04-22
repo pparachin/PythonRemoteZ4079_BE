@@ -16,7 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from viewer.views import hello, ahoj, index, movie_index, actor_index, movie_detail, actor_detail, director_detail
+from viewer.views import (hello, ahoj, index, movie_index,
+                          actor_index, movie_detail,
+                          actor_detail, director_detail, MovieView)
+
+from django.views.generic import TemplateView
 
 
 urlpatterns = [
@@ -24,9 +28,12 @@ urlpatterns = [
     path('hello/<parametr>', hello),
     path('ahoj/', ahoj),
     path('', index, name="index"),
-    path('movies/', movie_index, name="movies"),
+    #path('movies/', movie_index, name="movies"),
     path('actors', actor_index, name="actors"),
     path('movie_detail', movie_detail, name="movie_detail"),
     path('actor_detail', actor_detail, name="actor_detail"),
-    path('director_detail', director_detail, name="director_detail")
+    path('director_detail', director_detail, name="director_detail"),
+
+    # ClassBased-Views
+    path('movies/', MovieView.as_view(), name="movies"),
 ]
