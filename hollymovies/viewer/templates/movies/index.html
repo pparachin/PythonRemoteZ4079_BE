@@ -14,7 +14,7 @@
     <tbody>
       {% for movie in object_list %}
         <tr>
-          <td><a href="{% url 'movie_detail' %}?movie_id={{ movie.id }}" class="link-offset-2 link-underline link-underline-opacity-0">{{movie.title }}</a></td>
+          <td><a href="{% url 'movie_detail' movie.id %}" class="link-offset-2 link-underline link-underline-opacity-0">{{movie.title }}</a></td>
           <td>{{ movie.released }}</td>
           <td>{{ movie.rating }}</td>
           <td>{{ movie.description }}</td>

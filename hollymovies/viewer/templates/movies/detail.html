@@ -15,7 +15,7 @@
             </h5>
             Obsazení filmu:
             {% for actor in movie.actor.all %}
-                <a href="{% url 'actor_detail' %}?actor_id={{ actor.id }}" class="link-offset-2 link-underline link-underline-opacity-0">
+                <a href="{% url 'actor_detail' actor.id %}" class="link-offset-2 link-underline link-underline-opacity-0">
                     {% if movie.actor.all|length == forloop.counter %}
                         {{ actor }}
                     {% else %}

@@ -3,7 +3,7 @@ from django.shortcuts import render
 
 from viewer.models import Movie, Actor, Director
 
-from django.views.generic import TemplateView, ListView
+from django.views.generic import TemplateView, ListView, DetailView
 
 # Create your views here.
 def hello(request, parametr):
@@ -46,10 +46,25 @@ def director_detail(request):
 ClassBased Views
 """
 
+class ActorView(ListView):
+    model = Actor
+
+    template_name = "actors/index.html"
+
+class ActorDetailView(DetailView):
+    model = Actor
+
+    template_name = "actors/detail.html"
+
 class MovieView(ListView):
     model = Movie
 
     template_name = "movies/index.html"
+
+class MovieDetailView(DetailView):
+    model = Movie
+
+    template_name = "movies/detail.html"
 
 """
 GET: localhost:8000/movies?filter=year(2000)
