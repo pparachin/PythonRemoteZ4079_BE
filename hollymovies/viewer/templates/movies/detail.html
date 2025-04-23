@@ -1,13 +1,13 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<div class="card mt-5 col d-flex" style="width: 50rem;">
+<div class="card mt-5 mx-auto" style="width: 50rem;">
     <div class="card-header text-center">
         <h2>{{ movie.title }} ({{ movie.released }})</h2>
     </div>
     <div class="card-body">
         <div class="text-center">
-            <img src=".." class="card-img-top" alt="Obrázek filmu nenalezen">
+            <img src="{{ movie.poster_url.url }}" class="card-img-top" alt="Obrázek filmu nenalezen" style="width: 50%;border: 1px solid black">
             <h5 class="card-title">Režisér:
                 <a href="{% url 'director_detail' %}?director_id={{ movie.director.id }}" class="link-offset-2 link-underline link-underline-opacity-0">
                     {{ movie.director.name }} {{ movie.director.surname }} ({{movie.director.birth_day}})

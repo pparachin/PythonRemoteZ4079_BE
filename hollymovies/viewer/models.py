@@ -1,6 +1,6 @@
 from django.db.models import (
-  DO_NOTHING, CharField, DateField, DateTimeField, ForeignKey, IntegerField,
-  Model, TextField, ManyToManyField, CASCADE, ImageField, SET_NULL
+    DO_NOTHING, CharField, DateField, DateTimeField, ForeignKey, IntegerField,
+    Model, TextField, ManyToManyField, CASCADE, ImageField, SET_NULL
 )
 
 """
@@ -32,90 +32,93 @@ SET(...)	            Zavolá zadanou funkci pro určení nové hodnoty
 DO_NOTHING	            Neudělá nic
 """
 
+
 class Genre(Model):
-  name = CharField(max_length=128)
-  description = TextField()
-  created = DateTimeField(auto_now_add=True, null=True)
-  updated = DateTimeField(auto_now_add=True, null=True)
+    name = CharField(max_length=128)
+    description = TextField()
+    created = DateTimeField(auto_now_add=True, null=True)
+    updated = DateTimeField(auto_now_add=True, null=True)
 
-  def __repr__(self):
-    return '<Genre %s>' % self.name
+    def __repr__(self):
+        return '<Genre %s>' % self.name
 
-  def __str__(self):
-    return self.name
+    def __str__(self):
+        return self.name
+
 
 class Actor(Model):
-  name = CharField(max_length=128)
-  surname = CharField(max_length=128)
-  birth_day = DateField()
-  movie_count = IntegerField(default=0)
-  image_url = ImageField(null=True)
-  created = DateTimeField(auto_now_add=True, null=True)
-  updated = DateTimeField(auto_now_add=True, null=True)
+    name = CharField(max_length=128)
+    surname = CharField(max_length=128)
+    birth_day = DateField()
+    movie_count = IntegerField(default=0)
+    image_url = ImageField(null=True, upload_to="actors/%Y/%m/%d/ ")
+    created = DateTimeField(auto_now_add=True, null=True)
+    updated = DateTimeField(auto_now_add=True, null=True)
 
-  def __repr__(self):
-    return '<Actor %s>' % self.name % self.surname
+    def __repr__(self):
+        return '<Actor %s>' % self.name % self.surname
 
-  def __str__(self):
-    return f"{self.name} {self.surname}"
+    def __str__(self):
+        return f"{self.name} {self.surname}"
+
 
 class Director(Model):
-  name = CharField(max_length=128)
-  surname = CharField(max_length=128)
-  birth_day = DateField()
-  movie_count = IntegerField(default=0)
-  image_url = ImageField(null=True)
-  created = DateTimeField(auto_now_add=True, null=True)
-  updated = DateTimeField(auto_now_add=True, null=True)
+    name = CharField(max_length=128)
+    surname = CharField(max_length=128)
+    birth_day = DateField()
+    movie_count = IntegerField(default=0)
+    image_url = ImageField(null=True)
+    created = DateTimeField(auto_now_add=True, null=True)
+    updated = DateTimeField(auto_now_add=True, null=True)
 
-  def __repr__(self):
-    return '<Director %s>' % self.name % self.surname
+    def __repr__(self):
+        return '<Director %s>' % self.name % self.surname
 
-  def __str__(self):
-    return f"{self.name} {self.surname}"
+    def __str__(self):
+        return f"{self.name} {self.surname}"
+
 
 class Movie(Model):
-  title = CharField(max_length=128)
-  genre = ForeignKey(Genre, on_delete=DO_NOTHING, null=True, default=1)
-  rating = IntegerField()
-  released = IntegerField()
-  description = TextField()
-  poster_url = ImageField(null=True)
-  actor = ManyToManyField(Actor)
-  director = ForeignKey(Director, on_delete=SET_NULL, null=True, default=None)
-  created = DateTimeField(auto_now_add=True, null=True)
-  updated = DateTimeField(auto_now_add=True, null=True)
+    title = CharField(max_length=128)
+    genre = ForeignKey(Genre, on_delete=DO_NOTHING, null=True, default=1)
+    rating = IntegerField()
+    released = IntegerField()
+    description = TextField()
+    poster_url = ImageField(null=True)
+    actor = ManyToManyField(Actor)
+    director = ForeignKey(Director, on_delete=SET_NULL, null=True, default=None)
+    created = DateTimeField(auto_now_add=True, null=True)
+    updated = DateTimeField(auto_now_add=True, null=True)
 
-  def __repr__(self):
-    return '<Movie %s>' % self.title
+    def __repr__(self):
+        return '<Movie %s>' % self.title
 
-  def __str__(self):
-    return f"{self.title} ({self.released})"
+    def __str__(self):
+        return f"{self.title} ({self.released})"
 
 
 class User(Model):
-  username = CharField(max_length=128)
-  email = CharField(max_length=256)
-  password = CharField(max_length=512)
-  profile_image_url = ImageField(null=True)
-  created = DateTimeField(auto_now_add=True, null=True)
-  updated = DateTimeField(auto_now_add=True, null=True)
+    username = CharField(max_length=128)
+    email = CharField(max_length=256)
+    password = CharField(max_length=512)
+    profile_image_url = ImageField(null=True)
+    created = DateTimeField(auto_now_add=True, null=True)
+    updated = DateTimeField(auto_now_add=True, null=True)
 
-  def __repr__(self):
-    return '<User %s>' % self.username
+    def __repr__(self):
+        return '<User %s>' % self.username
 
-  def __str__(self):
-    return f"{self.username}({self.email})"
+    def __str__(self):
+        return f"{self.username}({self.email})"
+
 
 "heslojeveslo"
 
+
 class Review(Model):
-  user = ForeignKey(User, on_delete=CASCADE)
-  movie = ForeignKey(Movie, on_delete=CASCADE)
-  review = TextField(null=True)
-  rating = IntegerField(null=True)
-  created = DateTimeField(auto_now_add=True, null=True)
-  updated = DateTimeField(auto_now_add=True, null=True)
-
-
-
+    user = ForeignKey(User, on_delete=CASCADE)
+    movie = ForeignKey(Movie, on_delete=CASCADE)
+    review = TextField(null=True)
+    rating = IntegerField(null=True)
+    created = DateTimeField(auto_now_add=True, null=True)
+    updated = DateTimeField(auto_now_add=True, null=True)
