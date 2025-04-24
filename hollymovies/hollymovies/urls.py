@@ -32,7 +32,7 @@ urlpatterns = [
     path('hello/<parametr>', hello),
     path('ahoj/', ahoj),
     path('', index, name="index"),
-    #path('movies/', movie_index, name="movies"),
+    # path('movies/', movie_index, name="movies"),
     # path('actors', actor_index, name="actors"),
     # path('movie_detail', movie_detail, name="movie_detail"),
     # path('actor_detail', actor_detail, name="actor_detail"),
@@ -53,7 +53,7 @@ urlpatterns = [
     path("accounts/", include("django.contrib.auth.urls")),
     path("registration",RegistrationView.as_view(),name="registration"),
 
-    path("accounts/profile/detail", ProfileView.as_view(), name="profile")
+    path("accounts/profile", ProfileView.as_view(), name="profile")
 ]
 
 if settings.DEBUG:

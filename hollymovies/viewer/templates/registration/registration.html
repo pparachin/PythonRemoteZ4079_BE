@@ -1,6 +1,40 @@
 {% extends 'layout.html' %}
 
 {% block content %}
+<div class="card mt-5 mx-auto" style="width: 50rem;">
+    <div class="card-header text-center">
+        <h2>Registrace</h2>
+    </div>
+    <div class="card-body text-center">
+        <form method="post" class="">
+            {% csrf_token %}
+            <div class="mb-3">
+                {{ form.username.label_tag }}
+                {{ form.username }}
+                {{ form.username.errors }}
+            </div>
 
+            <div class="mb-3">
+                {{ form.email.label_tag }}
+                {{ form.email }}
+                {{ form.email.errors }}
+            </div>
+
+            <div class="mb-3">
+                {{ form.password1.label_tag }}
+                {{ form.password1 }}
+                {{ form.password1.errors }}
+            </div>
+
+            <div class="mb-3">
+                {{ form.password2.label_tag }}
+                {{ form.password2 }}
+                {{ form.password2.errors }}
+            </div>
+
+            <button type="submit">Registration</button>
+        </form>
+    </div>
+</div>
 
 {% endblock %}

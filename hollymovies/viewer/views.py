@@ -1,10 +1,16 @@
+from pyexpat.errors import messages
+
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from django.shortcuts import render
+from django.template.context_processors import request
+from .forms import RegistrationForm
 
 from viewer.models import Movie, Actor, Director
 from django.contrib.auth.models import User
 
-from django.views.generic import TemplateView, ListView, DetailView
+from django.views.generic import TemplateView, ListView, DetailView, FormView
+
 
 # Create your views here.
 def hello(request, parametr):
@@ -67,13 +73,24 @@ class MovieDetailView(DetailView):
 
     template_name = "movies/detail.html"
 
-class ProfileView(DetailView):
+class ProfileView(LoginRequiredMixin, DetailView):
     model = User
+    context_object_name = "user_profile"
+
+    def get_object(self):
+      return self.request.user
 
     template_name = "accounts/profile.html"
 
-class RegistrationView(TemplateView):
-    pass
+
+class RegistrationView(FormView):
+    template_name = "registration/registration.html"
+    form_class = RegistrationForm
+    success_url = "accounts/profile"
+
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)
 
 """
 GET: localhost:8000/movies?filter=year(2000)
