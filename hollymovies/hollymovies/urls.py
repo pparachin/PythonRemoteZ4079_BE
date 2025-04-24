@@ -20,7 +20,8 @@ from django.conf.urls.static import static
 from django.urls import path, include
 from viewer.views import (hello, ahoj, index, movie_index,
                           actor_index, movie_detail,
-                          actor_detail, director_detail, MovieView, MovieDetailView, ActorView, ActorDetailView)
+                          actor_detail, director_detail, MovieView, MovieDetailView,
+                          ActorView, ActorDetailView, ProfileView, RegistrationView)
 
 
 from django.views.generic import TemplateView
@@ -47,7 +48,12 @@ urlpatterns = [
     path('actors/', ActorView.as_view(), name="actors"),
     path('actor/<int:pk>/', ActorDetailView.as_view(), name="actor_detail"),
 
+
+    # Urls for auth
     path("accounts/", include("django.contrib.auth.urls")),
+    path("registration",RegistrationView.as_view(),name="registration"),
+
+    path("accounts/profile/detail", ProfileView.as_view(), name="profile")
 ]
 
 if settings.DEBUG:

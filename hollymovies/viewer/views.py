@@ -2,6 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 
 from viewer.models import Movie, Actor, Director
+from django.contrib.auth.models import User
 
 from django.views.generic import TemplateView, ListView, DetailView
 
@@ -65,6 +66,14 @@ class MovieDetailView(DetailView):
     model = Movie
 
     template_name = "movies/detail.html"
+
+class ProfileView(DetailView):
+    model = User
+
+    template_name = "accounts/profile.html"
+
+class RegistrationView(TemplateView):
+    pass
 
 """
 GET: localhost:8000/movies?filter=year(2000)

@@ -67,7 +67,7 @@ class Director(Model):
     surname = CharField(max_length=128)
     birth_day = DateField()
     movie_count = IntegerField(default=0)
-    image_url = ImageField(null=True)
+    image_url = ImageField(null=True, upload_to="directors/")
     created = DateTimeField(auto_now_add=True, null=True)
     updated = DateTimeField(auto_now_add=True, null=True)
 
@@ -84,7 +84,7 @@ class Movie(Model):
     rating = IntegerField()
     released = IntegerField()
     description = TextField()
-    poster_url = ImageField(null=True)
+    poster_url = ImageField(null=True, upload_to="movies_posters/")
     actor = ManyToManyField(Actor)
     director = ForeignKey(Director, on_delete=SET_NULL, null=True, default=None)
     created = DateTimeField(auto_now_add=True, null=True)
@@ -101,7 +101,7 @@ class User(Model):
     username = CharField(max_length=128)
     email = CharField(max_length=256)
     password = CharField(max_length=512)
-    profile_image_url = ImageField(null=True)
+    profile_image_url = ImageField(null=True, upload_to="users/")
     created = DateTimeField(auto_now_add=True, null=True)
     updated = DateTimeField(auto_now_add=True, null=True)
 
