@@ -1,0 +1,39 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="card mt-5 mx-auto" style="width: 50rem;">
+    <div class="card-header text-center">
+        <h2>Založit nového herce</h2>
+    </div>
+    <div class="card-body text-center">
+        <form method="post" class="" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="mb-3">
+                {{ form.name.label_tag }}
+                {{ form.name }}
+                {{ form.name.errors }}
+            </div>
+
+            <div class="mb-3">
+                {{ form.surname.label_tag }}
+                {{ form.surname }}
+                {{ form.surname.errors }}
+            </div>
+
+            <div class="mb-3">
+                {{ form.birth_day.label_tag }}
+                {{ form.birth_day }}
+                {{ form.birth_day.errors }}
+            </div>
+
+            <div class="mb-3">
+                {{ form.image_url.label_tag }}
+                {{ form.image_url }}
+                {{ form.image_url.errors }}
+            </div>
+
+            <button type="submit" class="btn btn-primary">Založit herce</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

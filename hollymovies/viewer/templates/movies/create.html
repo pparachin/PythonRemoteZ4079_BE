@@ -45,9 +45,15 @@
             </div>
 
             <div class="mb-3">
-                {{ form.director.label_tag }}
-                {{ form.director }}
-                {{ form.director.errors }}
+                {{ form.director_id.label_tag }}
+                {{ form.director_id }}
+                {{ form.director_id.errors }}
+            </div>
+
+            <div class="mb-3">
+                {{ form.actor_ids.label_tag }}
+                {{ form.actor_ids }}
+                {{ form.actor_ids.errors }}
             </div>
 
             <button type="submit" class="">Založit film</button>

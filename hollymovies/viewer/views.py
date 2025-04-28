@@ -4,12 +4,14 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.template.context_processors import request
-from .forms import RegistrationForm, MovieForm
+from django.urls import reverse_lazy
+
+from .forms import RegistrationForm, MovieForm, ActorForm
 
 from viewer.models import Movie, Actor, Director
 from django.contrib.auth.models import User
 
-from django.views.generic import TemplateView, ListView, DetailView, FormView
+from django.views.generic import TemplateView, ListView, DetailView, FormView, CreateView
 
 
 # Create your views here.
@@ -67,6 +69,15 @@ class ActorDetailView(DetailView):
 
     template_name = "actors/detail.html"
 
+class ActorCreateView(CreateView):
+    model = Actor
+    template_name = "actors/create.html"
+    form_class = ActorForm
+    success_url = reverse_lazy("actors")
+
+    def form_valid(self, form):
+        return super().form_valid(form)
+
 """
 ACTORS END
 """
@@ -84,20 +95,26 @@ class MovieDetailView(DetailView):
 
     template_name = "movies/detail.html"
 
-class MovieCreateView(FormView):
+class MovieCreateView(CreateView):
     template_name = "movies/create.html"
     form_class = MovieForm
     success_url = "movies"
 
     def form_valid(self, form):
-        Movie.objects.create(
+        movie = Movie(
             title = form.cleaned_data["title"],
             rating = form.cleaned_data["rating"],
             released = form.cleaned_data["released"],
             description = form.cleaned_data["description"],
             poster_url = form.cleaned_data["poster_url"],
-            genre_id = form.cleaned_data["genre_id"].id
+            genre_id = form.cleaned_data["genre_id"].id,
+            director_id = form.cleaned_data["director_id"].id
         )
+        movie.save()
+
+        actors = form.cleaned_data["actor_ids"]
+        movie.actor.set(actors)
+
         return super().form_valid(form)
 """
 MOVIE END
