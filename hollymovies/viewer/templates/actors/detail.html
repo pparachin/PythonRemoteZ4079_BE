@@ -1,17 +1,20 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<div class="card text-center" style="">
-    <div class="card-header">
-        {{ actor.name }} {{ actor.surname }} ({{ actor.birth_day|date:"d.m.Y" }})
+<div class="card mt-5 mx-auto" style="width: 50rem;">
+    <div class="card-header text-center">
+        <h2>{{ actor.name }} {{ actor.surname }} ({{ actor.birth_day|date:"d.m.Y" }})</h2>
     </div>
     <div class="card-body">
-        <img src=".." class="card-img-top" alt="Obrázek filmu nenalezen">
-        <h5>Počet filmů: </h5>{{ actor.movie_count }}
-        <a href="#" class="btn btn-primary">Edit</a>
+        <div class="text-center">
+            <img src="{{ actor.image_url.url }}" class="card-img-top" alt="Obrázek herce nenalezen" style="width: 50%;border: 1px solid black">
+            <h5>Počet filmů: </h5>{{ actor.movie_count }}
+        </div>
     </div>
     <div class="card-footer text-body-secondary">
-        {{ actor.created|date:"d.m.Y H:i:s" }}
+        <p class="text-center">{{ actor.created|date:"d.m.Y H:i:s" }}</p>
+        <span class="text-start"><a href="#" class="btn btn-primary">Edit</a></span>
+        <span class="text-end"><a href="#" class="btn btn-danger">Delete</a></span>
     </div>
 </div>
 {% endblock %}

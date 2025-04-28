@@ -5,8 +5,7 @@
 <table class="table">
     <thead>
     <tr>
-        <th>Jméno</th>
-        <th>Přijmení</th>
+        <th>Jméno a Přijmení</th>
         <th>Datum narození</th>
         <th>Počet filmů v databázi</th>
     </tr>
@@ -14,8 +13,7 @@
     <tbody>
     {% for actor in object_list %}
     <tr>
-        <td>{{ actor.name }}</td>
-        <td>{{ actor.surname }}</td>
+        <td><a href="{% url 'actor_detail' actor.id %}">{{ actor.name }} {{ actor.surname }}</a></td>
         <td>{{ actor.birth_day|date:"j.E Y" }}</td>
         <td>{{ actor.movie_count }}</td>
     </tr>
