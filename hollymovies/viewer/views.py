@@ -4,7 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.template.context_processors import request
-from .forms import RegistrationForm
+from .forms import RegistrationForm, MovieForm
 
 from viewer.models import Movie, Actor, Director
 from django.contrib.auth.models import User
@@ -53,6 +53,10 @@ def director_detail(request):
 ClassBased Views
 """
 
+"""
+ACTORS START
+"""
+
 class ActorView(ListView):
     model = Actor
 
@@ -63,6 +67,13 @@ class ActorDetailView(DetailView):
 
     template_name = "actors/detail.html"
 
+"""
+ACTORS END
+"""
+
+"""
+MOVIE START
+"""
 class MovieView(ListView):
     model = Movie
 
@@ -72,6 +83,14 @@ class MovieDetailView(DetailView):
     model = Movie
 
     template_name = "movies/detail.html"
+
+class MovieCreateView(FormView):
+    template_name = "movies/create.html"
+    form_class = MovieForm
+
+"""
+MOVIE END
+"""
 
 class ProfileView(LoginRequiredMixin, DetailView):
     model = User

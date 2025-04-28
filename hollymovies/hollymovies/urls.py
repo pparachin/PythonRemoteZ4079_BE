@@ -21,7 +21,8 @@ from django.urls import path, include
 from viewer.views import (hello, ahoj, index, movie_index,
                           actor_index, movie_detail,
                           actor_detail, director_detail, MovieView, MovieDetailView,
-                          ActorView, ActorDetailView, ProfileView, RegistrationView)
+                          ActorView, ActorDetailView, ProfileView, RegistrationView,
+                          MovieCreateView)
 
 
 from django.views.generic import TemplateView
@@ -43,6 +44,7 @@ urlpatterns = [
     # Movies
     path('movies/', MovieView.as_view(), name="movies"),
     path('movie/<int:pk>/', MovieDetailView.as_view(), name="movie_detail"),
+    path('movie_create', MovieCreateView.as_view(), name="movie_create"),
 
     # Actors
     path('actors/', ActorView.as_view(), name="actors"),

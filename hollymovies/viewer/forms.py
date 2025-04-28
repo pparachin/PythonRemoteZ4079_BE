@@ -1,6 +1,24 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from django.forms import (
+  CharField, DateField, Form, IntegerField, ModelChoiceField, Textarea, ImageField
+)
+
+from .models import Genre, Movie
+
+class MovieForm(Form):
+    title = CharField(max_length=128, widget=forms.TextInput(attrs={"class" : "form-control"}))
+    rating = IntegerField(widget=forms.NumberInput(attrs={"class" : "form-control", "min" : 0, "max" : 10, "step" : 1}))
+    released = DateField(widget=forms.DateInput(attrs={"class" : "form-control"}))
+    description = CharField(widget=Textarea(attrs={"class" : "form-control", "cols" : 40, "rows" : 3}), required=False)
+    poster_url = ImageField(widget=forms.FileInput(attrs={"class" : "form-control"}))
+    genre_id = ModelChoiceField(queryset=Genre.objects, widget=forms.Select(attrs={"class" : "form-control"}))
+
+    class Meta:
+        model = Movie
+
+        fields = ("title", "rating", "released", "description", "poster_url", "genre_id")
 
 
 class RegistrationForm(UserCreationForm):
