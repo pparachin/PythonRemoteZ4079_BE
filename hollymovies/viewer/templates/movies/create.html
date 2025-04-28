@@ -1,0 +1,57 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="card mt-5 mx-auto" style="width: 50rem;">
+    <div class="card-header text-center">
+        <h2>Založit nový film</h2>
+    </div>
+    <div class="card-body text-center">
+        <form method="post" class="" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="mb-3">
+                {{ form.title.label_tag }}
+                {{ form.title }}
+                {{ form.title.errors }}
+            </div>
+
+            <div class="mb-3">
+                {{ form.rating.label_tag }}
+                {{ form.rating }}
+                {{ form.rating.errors }}
+            </div>
+
+            <div class="mb-3">
+                {{ form.released.label_tag }}
+                {{ form.released }}
+                {{ form.released.errors }}
+            </div>
+
+            <div class="mb-3">
+                {{ form.description.label_tag }}
+                {{ form.description }}
+                {{ form.description.errors }}
+            </div>
+
+            <div class="mb-3">
+                {{ form.poster_url.label_tag }}
+                {{ form.poster_url }}
+                {{ form.poster_url.errors }}
+            </div>
+
+            <div class="mb-3">
+                {{ form.genre_id.label_tag }}
+                {{ form.genre_id }}
+                {{ form.genre_id.errors }}
+            </div>
+
+            <div class="mb-3">
+                {{ form.director.label_tag }}
+                {{ form.director }}
+                {{ form.director.errors }}
+            </div>
+
+            <button type="submit" class="">Založit film</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

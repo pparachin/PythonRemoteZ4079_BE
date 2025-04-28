@@ -87,7 +87,18 @@ class MovieDetailView(DetailView):
 class MovieCreateView(FormView):
     template_name = "movies/create.html"
     form_class = MovieForm
+    success_url = "movies"
 
+    def form_valid(self, form):
+        Movie.objects.create(
+            title = form.cleaned_data["title"],
+            rating = form.cleaned_data["rating"],
+            released = form.cleaned_data["released"],
+            description = form.cleaned_data["description"],
+            poster_url = form.cleaned_data["poster_url"],
+            genre_id = form.cleaned_data["genre_id"].id
+        )
+        return super().form_valid(form)
 """
 MOVIE END
 """
