@@ -55,11 +55,16 @@ class MovieForm(ModelForm):
                                    widget=forms.Select(attrs={"class": "form-control"}))
     description = CharField(label="Popis filmu",
                             widget=Textarea(attrs={"class": "form-control", "cols": 40, "rows": 3}), required=False)
-    poster_url = ImageField(label="Filmový plakát", widget=forms.FileInput(attrs={"class": "form-control"}))
+    poster_url = ImageField(label="Filmový plakát")
     genre_id = ModelChoiceField(label="Žánr", queryset=Genre.objects,
                                 widget=forms.Select(attrs={"class": "form-control"}))
     actor_ids = ModelMultipleChoiceField(label="Filmové obsazení", queryset=Actor.objects,
                                          widget=forms.SelectMultiple(attrs={"class": "form-control"}))
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for visible in self.visible_fields():
+            visible.field.widget.attrs['class'] = 'form-control'
 
 
 

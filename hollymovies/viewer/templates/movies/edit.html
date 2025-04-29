@@ -56,8 +56,17 @@
                 {{ form.actor_ids.errors }}
             </div>
 
-            <button type="submit" class="">Založit film</button>
-        </form>
+    </div>
+    <div class="card-footer text-body-secondary">
+        <div class="d-flex justify-content-between mb-2">
+            <div class="p-2">
+                <a href="{% url 'movie_detail' object.id %}" class="btn btn-secondary">Vrátit zpět</a>
+            </div>
+            <div class="p-2">
+                <button type="submit" class="btn btn-primary">Upravit film</button>
+            </div>
+            </form>
+        </div>
     </div>
 </div>
 {% endblock %}

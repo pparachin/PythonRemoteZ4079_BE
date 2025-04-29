@@ -3,21 +3,21 @@
 {% block content %}
 <div class="card mt-5 mx-auto" style="width: 50rem;">
     <div class="card-header text-center">
-        <h2>Smazání filmu {{ object.title }}</h2>
+        <h2>Smazání herce {{ object.name }} {{ object.surname }}</h2>
     </div>
     <div class="card-body">
         <div class="text-center">
             <form method="post">
                 {% csrf_token %}
                 <p>
-                    Opravdu chcete smazat tento: "{{ object.title }}" film z databáze?
+                    Opravdu chcete smazat tohoto: "{{ object.name }} {{ object.surname }}" herce z databáze?
                 </p>
         </div>
     </div>
     <div class="card-footer text-body-secondary">
         <div class="d-flex justify-content-between mb-2">
             <div class="p-2">
-                <a href="{% url 'movie_detail' object.id %}" class="btn btn-primary">Vrátit zpět</a>
+                <a href="{% url 'actor_detail' object.id %}" class="btn btn-primary">Vrátit zpět</a>
             </div>
             <div class="p-2">
                 <input type="submit" value="Smazat" class="btn btn-danger text-end">

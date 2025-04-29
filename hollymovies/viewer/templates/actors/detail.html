@@ -7,14 +7,31 @@
     </div>
     <div class="card-body">
         <div class="text-center">
-            <img src="{{ actor.image_url.url }}" class="card-img-top" alt="Obrázek herce nenalezen" style="width: 50%;border: 1px solid black">
+            <img src="{{ actor.image_url.url }}" class="card-img-top" alt="Obrázek herce nenalezen"
+                 style="width: 50%;border: 1px solid black">
             <h5>Počet filmů: </h5>{{ actor.movie_count }}
         </div>
     </div>
     <div class="card-footer text-body-secondary">
-        <p class="text-center">{{ actor.created|date:"d.m.Y H:i:s" }}</p>
-        <span class="text-start"><a href="#" class="btn btn-primary">Edit</a></span>
-        <span class="text-end"><a href="#" class="btn btn-danger">Delete</a></span>
+        <div class="d-flex justify-content-between mb-2">
+            <div class="p-2">
+                <span class="text-start"><a href="{% url 'actor_update' actor.id %}"
+                                            class="btn btn-primary">Edit</a></span>
+            </div>
+            <div class="p-2">
+                <span class="text-end"><a href="{% url 'actor_delete' actor.id %}"
+                                          class="btn btn-danger">Delete</a></span>
+            </div>
+        </div>
+        <div class="d-flex justify-content-between mb-2">
+            <div class="p-2">
+                <span class="text-start"><a href="{% url 'actors' %}"
+                                            class="btn btn-secondary">Vrátit zpět</a></span>
+            </div>
+            <div class="p-2">
+                <p class="text-end">{{ actor.created|date:"d.m.Y H:i:s" }}</p>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}

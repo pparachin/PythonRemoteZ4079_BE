@@ -11,7 +11,7 @@ from .forms import RegistrationForm, MovieForm, ActorForm
 from viewer.models import Movie, Actor, Director
 from django.contrib.auth.models import User
 
-from django.views.generic import TemplateView, ListView, DetailView, FormView, CreateView, UpdateView
+from django.views.generic import TemplateView, ListView, DetailView, FormView, CreateView, UpdateView, DeleteView
 
 
 # Create your views here.
@@ -69,6 +69,17 @@ class ActorDetailView(DetailView):
 
     template_name = "actors/detail.html"
 
+class ActorUpdateView(UpdateView):
+    model = Actor
+    template_name = "actors/edit.html"
+    success_url = reverse_lazy("actors")
+    form_class = ActorForm
+
+class ActorDeleteView(DeleteView):
+    model = Actor
+    template_name = "actors/delete.html"
+    success_url = reverse_lazy("actors")
+
 class ActorCreateView(CreateView):
     model = Actor
     template_name = "actors/create.html"
@@ -99,8 +110,13 @@ class MovieDetailView(DetailView):
 class MovieUpdateView(UpdateView):
     model = Movie
     template_name = "movies/edit.html"
-    success_url = "movies"
+    success_url = reverse_lazy("movies")
     form_class = MovieForm
+
+class MovieDeleteView(DeleteView):
+    model = Movie
+    template_name = "movies/delete.html"
+    success_url = reverse_lazy("movies")
 
 
 class MovieCreateView(CreateView):

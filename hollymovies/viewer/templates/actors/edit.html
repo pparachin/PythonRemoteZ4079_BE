@@ -1,0 +1,48 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="card mt-5 mx-auto" style="width: 50rem;">
+    <div class="card-header text-center">
+        <h2>Upravit: {{ form.name.value }} {{ form.surname.value }}</h2>
+    </div>
+    <div class="card-body text-center">
+        <form method="post" class="" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="mb-3">
+                {{ form.name.label_tag }}
+                {{ form.name }}
+                {{ form.name.errors }}
+            </div>
+
+            <div class="mb-3">
+                {{ form.surname.label_tag }}
+                {{ form.surname }}
+                {{ form.surname.errors }}
+            </div>
+
+            <div class="mb-3">
+                {{ form.birth_day.label_tag }}
+                {{ form.birth_day }}
+                {{ form.birth_day.errors }}
+            </div>
+
+            <div class="mb-3">
+                {{ form.image_url.label_tag }}
+                {{ form.image_url }}
+                {{ form.image_url.errors }}
+            </div>
+
+    </div>
+    <div class="card-footer text-body-secondary">
+        <div class="d-flex justify-content-between mb-2">
+            <div class="p-2">
+                <a href="{% url 'actor_detail' object.id %}" class="btn btn-secondary">Vrátit zpět</a>
+            </div>
+            <div class="p-2">
+                <button type="submit" class="btn btn-primary">Upravit herce</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
