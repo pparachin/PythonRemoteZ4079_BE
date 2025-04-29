@@ -22,7 +22,7 @@ from viewer.views import (hello, ahoj, index, movie_index,
                           actor_index, movie_detail,
                           actor_detail, director_detail, MovieView, MovieDetailView,
                           ActorView, ActorDetailView, ProfileView, RegistrationView,
-                          MovieCreateView, ActorCreateView)
+                          MovieCreateView, ActorCreateView, MovieUpdateView)
 
 
 from django.views.generic import TemplateView
@@ -45,6 +45,7 @@ urlpatterns = [
     path('movies/', MovieView.as_view(), name="movies"),
     path('movie/<int:pk>/', MovieDetailView.as_view(), name="movie_detail"),
     path('movie_create', MovieCreateView.as_view(), name="movie_create"),
+    path('movie/update/<int:pk>', MovieUpdateView.as_view(), name="movie_update"),
 
     # Actors
     path('actors/', ActorView.as_view(), name="actors"),

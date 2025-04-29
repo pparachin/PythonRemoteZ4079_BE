@@ -29,7 +29,7 @@
     </div>
     <div class="card-footer text-body-secondary">
         <p class="text-center">{{ movie.created|date:"d.m.Y H:i:s" }}</p>
-        <span class="text-start"><a href="#" class="btn btn-primary">Edit</a></span>
+        <span class="text-start"><a href="{% url 'movie_update' movie.id %}" class="btn btn-primary">Edit</a></span>
         <span class="text-end"><a href="#" class="btn btn-danger">Delete</a></span>
 
     </div>

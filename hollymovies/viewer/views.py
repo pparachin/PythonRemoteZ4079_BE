@@ -11,7 +11,7 @@ from .forms import RegistrationForm, MovieForm, ActorForm
 from viewer.models import Movie, Actor, Director
 from django.contrib.auth.models import User
 
-from django.views.generic import TemplateView, ListView, DetailView, FormView, CreateView
+from django.views.generic import TemplateView, ListView, DetailView, FormView, CreateView, UpdateView
 
 
 # Create your views here.
@@ -94,6 +94,14 @@ class MovieDetailView(DetailView):
     model = Movie
 
     template_name = "movies/detail.html"
+
+# Změnit success url, chceme se vrátit zpět na editovaný film (záznam)
+class MovieUpdateView(UpdateView):
+    model = Movie
+    template_name = "movies/edit.html"
+    success_url = "movies"
+    form_class = MovieForm
+
 
 class MovieCreateView(CreateView):
     template_name = "movies/create.html"

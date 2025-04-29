@@ -12,6 +12,7 @@ from .models import Genre, Movie, Director, Actor
 class ActorForm(ModelForm):
     class Meta:
         model = Actor
+        # fields = "__all__"
         fields = ["name", "surname","birth_day", "image_url"]
 
     birth_day = forms.DateField(
@@ -33,13 +34,18 @@ class ActorForm(ModelForm):
     image_url = ImageField(label="Fotka")
 
 
-def __init__(self, *args, **kwargs):
-    super().__init__(*args, **kwargs)
-    for visible in self.visible_fields():
-        visible.field.widget.attrs['class'] = 'form-control'
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for visible in self.visible_fields():
+            visible.field.widget.attrs['class'] = 'form-control'
 
 
-class MovieForm(Form):
+class MovieForm(ModelForm):
+
+    class Meta:
+        model = Movie
+        fields = ["title", "rating", "released", "director_id", "description", "poster_url", "genre_id", "actor_ids"]
+
     title = CharField(max_length=128, label="Název filmu", widget=forms.TextInput(
         attrs={"class": "form-control", "placeholder": "Název filmu", "value": "Film"}))
     rating = IntegerField(label="Hodnocení",
@@ -55,12 +61,6 @@ class MovieForm(Form):
     actor_ids = ModelMultipleChoiceField(label="Filmové obsazení", queryset=Actor.objects,
                                          widget=forms.SelectMultiple(attrs={"class": "form-control"}))
 
-    """
-    class Meta:
-        model = Movie
-
-        fields = ("title", "rating", "released", "description", "poster_url", "genre_id")
-    """
 
 
 class RegistrationForm(UserCreationForm):
