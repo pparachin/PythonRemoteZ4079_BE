@@ -44,19 +44,19 @@ class MovieForm(ModelForm):
 
     class Meta:
         model = Movie
-        fields = ["title", "rating", "released", "director_id", "description", "poster_url", "genre_id", "actor_ids"]
+        fields = ["title", "rating", "released", "director", "description", "poster_url", "genre", "actor_ids"]
 
     title = CharField(max_length=128, label="Název filmu", widget=forms.TextInput(
         attrs={"class": "form-control", "placeholder": "Název filmu", "value": "Film"}))
     rating = IntegerField(label="Hodnocení",
                           widget=forms.NumberInput(attrs={"class": "form-control", "min": 0, "max": 10, "step": 1}))
     released = IntegerField(label="Rok vydání", widget=forms.NumberInput(attrs={"class": "form-control"}))
-    director_id = ModelChoiceField(label="Režisér", queryset=Director.objects,
+    director = ModelChoiceField(label="Režisér", queryset=Director.objects,
                                    widget=forms.Select(attrs={"class": "form-control"}))
     description = CharField(label="Popis filmu",
                             widget=Textarea(attrs={"class": "form-control", "cols": 40, "rows": 3}), required=False)
     poster_url = ImageField(label="Filmový plakát")
-    genre_id = ModelChoiceField(label="Žánr", queryset=Genre.objects,
+    genre = ModelChoiceField(label="Žánr", queryset=Genre.objects,
                                 widget=forms.Select(attrs={"class": "form-control"}))
     actor_ids = ModelMultipleChoiceField(label="Filmové obsazení", queryset=Actor.objects,
                                          widget=forms.SelectMultiple(attrs={"class": "form-control"}))

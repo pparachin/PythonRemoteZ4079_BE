@@ -85,7 +85,7 @@ class Movie(Model):
     released = IntegerField()
     description = TextField()
     poster_url = ImageField(null=True, upload_to="movies_posters/")
-    actor = ManyToManyField(Actor)
+    actor = ManyToManyField(Actor, related_name='movies')
     director = ForeignKey(Director, on_delete=SET_NULL, null=True, default=None)
     created = DateTimeField(auto_now_add=True, null=True)
     updated = DateTimeField(auto_now_add=True, null=True)

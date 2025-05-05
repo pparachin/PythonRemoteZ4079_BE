@@ -131,8 +131,8 @@ class MovieCreateView(CreateView):
             released = form.cleaned_data["released"],
             description = form.cleaned_data["description"],
             poster_url = form.cleaned_data["poster_url"],
-            genre_id = form.cleaned_data["genre_id"].id,
-            director_id = form.cleaned_data["director_id"].id
+            genre = form.cleaned_data["genre_id"].id,
+            director = form.cleaned_data["director_id"].id
         )
         movie.save()
 
