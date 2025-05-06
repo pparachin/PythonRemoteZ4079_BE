@@ -1,5 +1,7 @@
 {% extends "layout.html" %}
 
+{% block title %}Hollymovies - Seznam herců{% endblock %}
+
 {% block content %}
 <h1>Herci</h1>
 <table class="table">
@@ -21,7 +23,12 @@
     </tbody>
 </table>
 
-<a href="{% url 'actor_create' %}" class="btn btn-primary">Založit nového herce</a>
+<div class="test mt-2">
 
+</div>
+
+{% if perms.viewer.create_actor %}
+<a href="{% url 'actor_create' %}" class="btn btn-primary">Založit nového herce</a>
+{% endif %}
 
 {% endblock %}

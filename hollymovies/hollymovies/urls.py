@@ -61,7 +61,7 @@ urlpatterns = [
     path("accounts/", include("django.contrib.auth.urls")),
     path("registration",RegistrationView.as_view(),name="registration"),
 
-    path("accounts/profile", ProfileView.as_view(), name="profile")
+    path("accounts/profile", ProfileView.as_view(), name="profile"),
 ]
 
 if settings.DEBUG:

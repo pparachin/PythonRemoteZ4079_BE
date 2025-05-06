@@ -1,6 +1,6 @@
 from pyexpat.errors import messages
 
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.template.context_processors import request
@@ -64,27 +64,32 @@ class ActorView(ListView):
 
     template_name = "actors/index.html"
 
-class ActorDetailView(DetailView):
+class ActorDetailView(PermissionRequiredMixin, DetailView):
     model = Actor
 
     template_name = "actors/detail.html"
+    permission_required = "viewer.view_actor"
 
-class ActorUpdateView(UpdateView):
+class ActorUpdateView(PermissionRequiredMixin, UpdateView):
     model = Actor
     template_name = "actors/edit.html"
     success_url = reverse_lazy("actors")
     form_class = ActorForm
+    permission_required = "viewer.change_actor"
+    # opravnění jsou ve tvaru "{název_aplikace}.{název operace}_{název modelu}"
 
-class ActorDeleteView(DeleteView):
+class ActorDeleteView(PermissionRequiredMixin, DeleteView):
     model = Actor
     template_name = "actors/delete.html"
     success_url = reverse_lazy("actors")
+    permission_required = "viewer.delete_actor"
 
-class ActorCreateView(CreateView):
+class ActorCreateView(PermissionRequiredMixin, CreateView):
     model = Actor
     template_name = "actors/create.html"
     form_class = ActorForm
     success_url = reverse_lazy("actors")
+    permission_required = "viewer.create_actor"
 
     def form_valid(self, form):
         return super().form_valid(form)
@@ -107,22 +112,25 @@ class MovieDetailView(DetailView):
     template_name = "movies/detail.html"
 
 # Změnit success url, chceme se vrátit zpět na editovaný film (záznam)
-class MovieUpdateView(UpdateView):
+class MovieUpdateView(PermissionRequiredMixin, UpdateView):
     model = Movie
     template_name = "movies/edit.html"
     success_url = reverse_lazy("movies")
     form_class = MovieForm
+    permission_required = "viewer.change_movie"
 
-class MovieDeleteView(DeleteView):
+class MovieDeleteView(PermissionRequiredMixin, DeleteView):
     model = Movie
     template_name = "movies/delete.html"
     success_url = reverse_lazy("movies")
+    permission_required = "viewer.delete_movie"
 
 
-class MovieCreateView(CreateView):
+class MovieCreateView(PermissionRequiredMixin, CreateView):
     template_name = "movies/create.html"
     form_class = MovieForm
     success_url = "movies"
+    permission_required = "viewer.create_movie"
 
     def form_valid(self, form):
         movie = Movie(

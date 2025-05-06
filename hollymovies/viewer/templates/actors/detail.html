@@ -1,35 +1,43 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<div class="card mt-5 mx-auto" style="width: 50rem;">
-    <div class="card-header text-center">
-        <h2>{{ actor.name }} {{ actor.surname }} ({{ actor.birth_day|date:"d.m.Y" }})</h2>
-    </div>
-    <div class="card-body">
-        <div class="text-center">
-            <img src="{{ actor.image_url.url }}" class="card-img-top" alt="Obrázek herce nenalezen"
-                 style="width: 50%;border: 1px solid black">
-            <h5>Počet filmů: </h5>{{ actor.movie_count }}
-        </div>
-    </div>
-    <div class="card-footer text-body-secondary">
-        <div class="d-flex justify-content-between mb-2">
-            <div class="p-2">
+<div class="row justify-content-center mt-5">
+    <div class="col-sm-10 col-md-8 col-lg-6">
+        <div class="card w-100 h-100">
+            <div class="card-header text-center">
+                <h2>{{ actor.name }} {{ actor.surname }} ({{ actor.birth_day|date:"d.m.Y" }})</h2>
+            </div>
+            <div class="card-body">
+                <div class="text-center">
+                    <img src="{{ actor.image_url.url }}" class="card-img-top" alt="Obrázek herce nenalezen"
+                         style="width: 50%;border: 1px solid black">
+                    <h5>Počet filmů: </h5>{{ actor.movie_count }}
+                </div>
+            </div>
+            <div class="card-footer text-body-secondary">
+                <div class="d-flex justify-content-between mb-2">
+                    {% if perms.viewer.change_actor %}
+                    <div class="p-2">
                 <span class="text-start"><a href="{% url 'actor_update' actor.id %}"
                                             class="btn btn-primary">Edit</a></span>
-            </div>
-            <div class="p-2">
+                    </div>
+                    {% endif %}
+                    {% if perms.viewer.delete_actor %}
+                    <div class="p-2">
                 <span class="text-end"><a href="{% url 'actor_delete' actor.id %}"
                                           class="btn btn-danger">Delete</a></span>
-            </div>
-        </div>
-        <div class="d-flex justify-content-between mb-2">
-            <div class="p-2">
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="d-flex justify-content-between mb-2">
+                    <div class="p-2">
                 <span class="text-start"><a href="{% url 'actors' %}"
                                             class="btn btn-secondary">Vrátit zpět</a></span>
-            </div>
-            <div class="p-2">
-                <p class="text-end">{{ actor.created|date:"d.m.Y H:i:s" }}</p>
+                    </div>
+                    <div class="p-2">
+                        <p class="text-end">{{ actor.created|date:"d.m.Y H:i:s" }}</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

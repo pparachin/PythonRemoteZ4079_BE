@@ -1,29 +1,41 @@
 {% extends "layout.html" %}
+{% load static %}
+
+{% block title %}Hollymovies - Seznam filmů{% endblock %}
 
 {% block content %}
-  <h1>Filmy</h1>
-  <table class="table">
+<h1>Filmy</h1>
+<table class="table">
     <thead>
-      <tr>
+    <tr>
         <th>Název filmu</th>
         <th>Rok vydání</th>
         <th>Hodnocení</th>
         <th>Popis</th>
-      </tr>
+    </tr>
     </thead>
     <tbody>
-      {% for movie in object_list %}
-        <tr>
-          <td><a href="{% url 'movie_detail' movie.id %}" class="link-offset-2 link-underline link-underline-opacity-0">{{movie.title }}</a></td>
-          <td>{{ movie.released }}</td>
-          <td>{{ movie.rating }}</td>
-          <td>{{ movie.description }}</td>
-        </tr>
-      {% endfor %}
+    {% for movie in object_list %}
+    <tr>
+        <td><a href="{% url 'movie_detail' movie.id %}" class="link-offset-2 link-underline link-underline-opacity-0">
+            {{ movie.title }}</a></td>
+        <td>{{ movie.released }}</td>
+        <td>{{ movie.rating }}</td>
+        <td>
+            <div class="description-short" id="desc-short-{{ movie.id }}">{{ movie.description|truncatechars:100 }}
+            </div>
+            <div class="description-full d-none" id="desc-full-{{ movie.id }}">{{ movie.description }}</div>
+            <button class="btn btn-link p-0" onclick="toggleDescription({{ movie.id }})"
+                    id="desc-toggle-{{ movie.id }}">Zobrazit více
+            </button>
+        </td>
+    </tr>
+    {% endfor %}
     </tbody>
-  </table>
+</table>
 
+{% if perms.viewer.create_movie %}
 <a href="{% url 'movie_create' %}" class="btn btn-primary">Založit film</a>
-
-
+{% endif %}
+<script src="{% static 'viewer/js/show_more.js' %}" />
 {% endblock %}

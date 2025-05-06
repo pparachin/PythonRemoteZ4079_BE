@@ -1,66 +1,74 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<div class="card mt-5 mx-auto" style="width: 50rem;">
-    <div class="card-header text-center">
-        <h2>{{ movie.title }} ({{ movie.released }})</h2>
-    </div>
-    <div class="card-body">
-        <div class="text-center">
-            <img src="{{ movie.poster_url.url }}" class="card-img-top" alt="Obrázek filmu nenalezen"
-                 style="width: 50%;border: 1px solid black">
-            <table class="table">
-                <thead>
-                <tr>
-                    <th scope="col">Režisér</th>
-                    <th scope="col">Žánr</th>
-                    <th scope="col">Obsazení filmu</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td><a href="{% url 'director_detail' %}?director_id={{ movie.director.id }}"
-                           class="link-offset-2 link-underline link-underline-opacity-0">
-                        {{ movie.director.name }} {{ movie.director.surname }} ({{movie.director.birth_day}})
-                    </a></td>
-                    <td>{{ movie.genre.name }}</td>
-                    <td>
-                        {% for actor in movie.actor.all %}
-                        <a href="{% url 'actor_detail' actor.id %}"
-                           class="link-offset-2 link-underline link-underline-opacity-0">
-                            {% if movie.actor.all|length == forloop.counter %}
-                            {{ actor }}
-                            {% else %}
-                            {{ actor }},
-                            {% endif %}
-                        </a>
-                        {% endfor %}
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-        <h4 class="mt-2">Popis filmu</h4>
-        <p class="card-text">{{ movie.description }}</p>
-    </div>
-    <div class="card-footer text-body-secondary">
-        <div class="d-flex justify-content-between mb-2">
-            <div class="p-2">
+<div class="row justify-content-center mt-5">
+    <div class="col-sm-10 col-md-8 col-lg-6">
+        <div class="card w-100 h-100">
+            <div class="card-header text-center">
+                <h2>{{ movie.title }} ({{ movie.released }})</h2>
+            </div>
+            <div class="card-body">
+                <div class="text-center">
+                    <img src="{{ movie.poster_url.url }}" class="card-img-top" alt="Obrázek filmu nenalezen"
+                         style="width: 50%;border: 1px solid black">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Režisér</th>
+                            <th scope="col">Žánr</th>
+                            <th scope="col">Obsazení filmu</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td><a href="{% url 'director_detail' %}?director_id={{ movie.director.id }}"
+                                   class="link-offset-2 link-underline link-underline-opacity-0">
+                                {{ movie.director.name }} {{ movie.director.surname }} ({{movie.director.birth_day}})
+                            </a></td>
+                            <td>{{ movie.genre.name }}</td>
+                            <td>
+                                {% for actor in movie.actor.all %}
+                                <a href="{% url 'actor_detail' actor.id %}"
+                                   class="link-offset-2 link-underline link-underline-opacity-0">
+                                    {% if movie.actor.all|length == forloop.counter %}
+                                    {{ actor }}
+                                    {% else %}
+                                    {{ actor }},
+                                    {% endif %}
+                                </a>
+                                {% endfor %}
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <h4 class="mt-2">Popis filmu</h4>
+                <p class="card-text">{{ movie.description }}</p>
+            </div>
+            <div class="card-footer text-body-secondary">
+                <div class="d-flex justify-content-between mb-2">
+                    {% if perms.viewer.change_movie %}
+                    <div class="p-2">
                 <span class="text-start"><a href="{% url 'movie_update' movie.id %}"
                                             class="btn btn-primary">Edit</a></span>
-            </div>
-            <div class="p-2">
+                    </div>
+                    {% endif %}
+                    {% if perms.viewer.delete_movie %}
+                    <div class="p-2">
                 <span class="text-end"><a href="{% url 'movie_delete' movie.id %}"
                                           class="btn btn-danger">Delete</a></span>
-            </div>
-        </div>
-        <div class="d-flex justify-content-between mb-2">
-            <div class="p-2">
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="d-flex justify-content-between mb-2">
+                    <div class="p-2">
                 <span class="text-start"><a href="{% url 'movies' %}"
                                             class="btn btn-secondary">Vrátit zpět</a></span>
-            </div>
-            <div class="p-2">
-                <p class="text-end">{{ movie.created|date:"d.m.Y H:i:s" }}</p>
+                    </div>
+                    <div class="p-2">
+                        <p class="text-end">{{ movie.created|date:"d.m.Y H:i:s" }}</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
