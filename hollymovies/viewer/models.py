@@ -56,7 +56,7 @@ class Actor(Model):
     updated = DateTimeField(auto_now_add=True, null=True)
 
     def __repr__(self):
-        return '<Actor %s>' % self.name % self.surname
+        return '<Actor %s>'
 
     def __str__(self):
         return f"{self.name} {self.surname}"
@@ -72,7 +72,7 @@ class Director(Model):
     updated = DateTimeField(auto_now_add=True, null=True)
 
     def __repr__(self):
-        return '<Director %s>' % self.name % self.surname
+        return f"<{self.name} {self.surname}>"
 
     def __str__(self):
         return f"{self.name} {self.surname}"
