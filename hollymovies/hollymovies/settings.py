@@ -55,6 +55,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.locale.LocaleMiddleware', # Přidáme pro umožnění překladů
 ]
 
 ROOT_URLCONF = 'hollymovies.urls'
@@ -114,7 +115,17 @@ LANGUAGE_CODE = 'cs-cz'
 
 TIME_ZONE = 'Europe/Prague'
 
+
+# 1. zadefinujeme jazyky které budeme chtít používat
+LANGUAGES = [
+    ('cs', 'Čeština'),
+    ('en', 'English'),
+]
+
 USE_I18N = True
+
+# Cestu k souborům, kde budou k dispozici překlady
+LOCALE_PATHS = [BASE_DIR / "locale"]
 
 USE_TZ = True
 

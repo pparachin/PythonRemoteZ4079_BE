@@ -9,7 +9,7 @@ from django.urls import reverse_lazy
 from .forms import RegistrationForm, MovieForm, ActorForm
 
 from viewer.models import Movie, Actor, Director
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 
 from django.views.generic import TemplateView, ListView, DetailView, FormView, CreateView, UpdateView, DeleteView
 
@@ -168,7 +168,10 @@ class RegistrationView(FormView):
     success_url = "accounts/profile"
 
     def form_valid(self, form):
-        form.save()
+        user = form.save()
+
+        group = Group.objects.get(name="default_user")
+        user.groups.add(group)
         return super().form_valid(form)
 
 """
