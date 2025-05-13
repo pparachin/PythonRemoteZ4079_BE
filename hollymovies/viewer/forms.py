@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.forms import (
     CharField, DateField, Form, IntegerField, ModelChoiceField, Textarea, ImageField, ModelMultipleChoiceField,
     ModelForm, DateInput
@@ -49,7 +50,8 @@ class MovieForm(ModelForm):
     title = CharField(max_length=128, label="Název filmu", widget=forms.TextInput(
         attrs={"class": "form-control", "placeholder": "Název filmu", "value": "Film"}))
     rating = IntegerField(label="Hodnocení",
-                          widget=forms.NumberInput(attrs={"class": "form-control", "min": 0, "max": 10, "step": 1}))
+                          widget=forms.NumberInput(attrs={"class": "form-control", "min": 0, "max": 10, "step": 1}),
+                          validators=[MinValueValidator(1), MaxValueValidator(10)])
     released = IntegerField(label="Rok vydání", widget=forms.NumberInput(attrs={"class": "form-control"}))
     director = ModelChoiceField(label="Režisér", queryset=Director.objects,
                                    widget=forms.Select(attrs={"class": "form-control"}))
@@ -60,6 +62,12 @@ class MovieForm(ModelForm):
                                 widget=forms.Select(attrs={"class": "form-control"}))
     actor_ids = ModelMultipleChoiceField(label="Filmové obsazení", queryset=Actor.objects,
                                          widget=forms.SelectMultiple(attrs={"class": "form-control"}))
+
+    def clean_released(self):
+       year = self.cleaned_data["released"]
+       if year < 1900 or year > 2027:
+           raise forms.ValidationError("Rok musí v rozmezí 1900 - 2026")
+       return year
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

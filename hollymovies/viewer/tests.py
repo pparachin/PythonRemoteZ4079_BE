@@ -1,9 +1,24 @@
+import time
 from platform import release
+from telnetlib import EC
 
+from django.template.defaultfilters import title
 from django.test import TestCase, Client
 from django.urls import reverse
 from django.contrib.auth.models import User, Permission
+from selenium.webdriver.support.select import Select
+from selenium.webdriver.support.wait import WebDriverWait
+
 from .models import Genre, Actor, Director, Movie
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.by import By
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.support.ui import WebDriverWait, Select
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
 
 """
 class ModelsTest(TestCase):
@@ -45,7 +60,6 @@ class ModelsTest(TestCase):
 
     "Úkol: vytvořit to stejné pro film"
     "Přidat k filmu herce"
-"""
 
 class ActorViewsTest(TestCase):
     def setUp(self):
@@ -81,3 +95,77 @@ class ActorViewsTest(TestCase):
         self.assertEqual(resp.status_code, 200)
         self.assertTemplateUsed(resp, "actors/detail.html")
         self.assertContains(resp, "Matthew Perry")
+
+
+class MovieViewsTest(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.genre = Genre.objects.create(name="Horror", description="Strašidelné filmy")
+        self.director = Director.objects.create(name="Quentin", surname="Tarantino", birth_day="1963-03-27")
+        self.movie = Movie.objects.create(
+            title="Pulp Fiction: Historky z podsvětí",
+            genre=self.genre,
+            rating=10,
+            released=1994,
+            description="Nejkultovnější z kultovních filmů 90. let je autorskou Biblí Quentina Tarantina, který v tomto opusu definoval základní prvky své režisérské poetiky a vytvořil dílo rozněcující náročné kritiky na festivalu v Cannes, levicové a pravicové intelektuály i zedníky dopřávající si po těžké šichtě trochu oddychu. Pulp Fiction je multižánrovým opusem, který přetéká fetišistickými detaily a popkulturními odkazy a zároveň dokonale funguje jako svrchovaně napínavý film rozvržený do inovativní příběhové struktury. Chcete vidět homosexuální znásilnění sbližující dva nepřátele na život a na smrt?",
+            director=self.director
+        )
+        self.url_list = reverse("movies")
+        self.url_detail = reverse("movie_detail", args=[self.movie.pk])
+
+    def test_actor_list(self):
+        resp = self.client.get(self.url_list)
+        self.assertEqual(resp.status_code, 200)
+        self.assertTemplateUsed(resp, "movies/index.html")
+        self.assertIn(self.movie, resp.context["object_list"])
+
+"""
+
+
+class SeleniumTests(StaticLiveServerTestCase):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        chrome_options = Options()
+        chrome_options.headless = False
+        chrome_options.add_argument("--start-maximized")
+
+        cls.selenium = webdriver.Chrome(
+            service=Service(ChromeDriverManager().install()),
+            options=chrome_options
+        )
+        cls.selenium.implicitly_wait(10)
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.selenium.quit()
+        super().tearDownClass()
+    """
+    def test_homepage_title(self):
+        self.selenium.get(f"{self.live_server_url}/")
+        self.assertIn("Movies", self.selenium.title)
+    """
+
+    def test_language_dropdown_with_selenium(self):
+        self.selenium.get(f"{self.live_server_url}/")
+        time.sleep(10)
+        dropdown_btn = self.selenium.find_element(By.ID, "langDropdown3")
+        dropdown_btn.click()
+        time.sleep(10)
+
+        wait = WebDriverWait(self.selenium, 10)
+        select_elem = wait.until(
+            EC.visibility_of_element_located((By.NAME, "language"))
+        )
+
+        time.sleep(10)
+        select = Select(select_elem)
+        select.select_by_value("en")
+
+        time.sleep(5)
+        wait.until(
+            EC.staleness_of(select_elem)
+        )
+        new_select = self.selenium.find_element(By.NAME, "language")
+        new_selected = new_select.find_element(By.CSS_SELECTOR, "option:checked")
+        self.assertEqual(new_selected.get_attribute("value"), "en")

@@ -1,5 +1,18 @@
-{% extends "layout.html" %}
 {% load i18n %}
-{% block content %}
- {% trans "Přístup odepřen" %}
-{% endblock %}
+<html>
+<head>
+    <title>403 - {% trans "Přístup odepřen" %}</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+</head>
+<body style="background-color: darkgray">
+<a href="/">Vrátit zpět</a>
+<div class="container">
+    <div class="position-absolute top-50 start-50">
+        <h1 class="display-1 text-center">{% trans "Přístup odepřen" %}</h1>
+    </div>
+</div>
+</body>
+</html>

@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-4zznjp(!94qxs_+1e$0(nn(_0)-43-&gxtq$au1ij74sn@@3gk
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 MEDIA_URL = "/media/"
 
@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'viewer'
+    'viewer',
+    'rest_framework_simplejwt',
 ]
 
 MIDDLEWARE = [
@@ -77,6 +78,11 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'hollymovies.wsgi.application'
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases

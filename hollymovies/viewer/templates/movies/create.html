@@ -1,9 +1,10 @@
 {% extends 'layout.html' %}
+{% load i18n %}
 
 {% block content %}
 <div class="card mt-5 mx-auto" style="width: 50rem;">
     <div class="card-header text-center">
-        <h2>Založit nový film</h2>
+        <h2>{% trans "Založit nový film" %}</h2>
     </div>
     <div class="card-body text-center">
         <form method="post" class="" enctype="multipart/form-data">

@@ -28,6 +28,11 @@ from viewer.views import (hello, ahoj, index, movie_index,
                           MovieCreateView, ActorCreateView, MovieUpdateView, MovieDeleteView,
                           ActorUpdateView, ActorDeleteView)
 
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
+
 from django.views.generic import TemplateView
 
 """
@@ -105,6 +110,10 @@ urlpatterns = i18n_patterns(
     path("registration", RegistrationView.as_view(), name="registration"),
 
     path("accounts/profile", ProfileView.as_view(), name="profile"),
+
+    # JWT Token - Obtain and Refresh
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 )
 
 if settings.DEBUG:

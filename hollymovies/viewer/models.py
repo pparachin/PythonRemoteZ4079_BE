@@ -1,3 +1,4 @@
+from PIL import Image
 from django.db.models import (
     DO_NOTHING, CharField, DateField, DateTimeField, ForeignKey, IntegerField,
     Model, TextField, ManyToManyField, CASCADE, ImageField, SET_NULL
@@ -89,6 +90,14 @@ class Movie(Model):
     director = ForeignKey(Director, on_delete=SET_NULL, null=True, default=None)
     created = DateTimeField(auto_now_add=True, null=True)
     updated = DateTimeField(auto_now_add=True, null=True)
+
+    def save(self):
+        if not self.id and not self.poster_url:
+            return
+
+        image = Image.open(self.poster_url)
+        image.resize((400,400))
+        image.save(self.poster_url.path)
 
     def __repr__(self):
         return '<Movie %s>' % self.title

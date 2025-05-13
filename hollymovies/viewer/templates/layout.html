@@ -3,6 +3,7 @@
 <head>
     {% load static %}
     {% load i18n %}
+    {% get_current_language as LANGUAGE_CODE %}
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link href="{% static 'viewer/css/main.css' %}" rel="stylesheet"/>
@@ -55,22 +56,23 @@
             <a class="nav-item nav-link" href="{% url 'login' %}">Přihlášení</a>
             <a class="nav-item nav-link" href="{% url 'registration' %}">Registrace</a>
             {% endif %}
-            <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                    {% trans "Změnit jazyk" %}
-                </button>
-                <form action="{% url 'set_language' %}" method="post">
-                    {% csrf_token %}
-                    <ul class="dropdown-menu">
-                        <select>
-                            <option value="cs">Čeština</option>
-                            <option value="en">English</option>
+            <form id="lang-form" action="{% url 'set_language' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button"
+                            id="langDropdown3" data-bs-toggle="dropdown" aria-expanded="false">
+                        {% trans "Změnit jazyk" %}
+                    </button>
+                    <ul class="dropdown-menu px-3 py-2" aria-labelledby="langDropdown3">
+                        <select name="language" class="form-select"
+                                onchange="document.getElementById('lang-form').submit()">
+                            <option value="cs" {% if request.LANGUAGE_CODE == 'cs' %}selected{% endif %}>Čeština</option>
+                            <option value="en" {% if request.LANGUAGE_CODE == 'en' %}selected{% endif %}>Angličtina</option>
                         </select>
                     </ul>
-                    <input type="submit" class="btn btn-primary" value="Změna">
-                </form>
-            </div>
+                </div>
+            </form>
         </div>
     </div>
 </nav>

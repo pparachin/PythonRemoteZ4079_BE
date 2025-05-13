@@ -139,9 +139,10 @@ class MovieCreateView(PermissionRequiredMixin, CreateView):
             released = form.cleaned_data["released"],
             description = form.cleaned_data["description"],
             poster_url = form.cleaned_data["poster_url"],
-            genre = form.cleaned_data["genre_id"].id,
-            director = form.cleaned_data["director_id"].id
+            genre = form.cleaned_data["genre"],
+            director = form.cleaned_data["director"]
         )
+        poster = form.cleaned_data["poster_url"]
         movie.save()
 
         actors = form.cleaned_data["actor_ids"]
