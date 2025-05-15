@@ -1,7 +1,7 @@
 from PIL import Image
 from django.db.models import (
     DO_NOTHING, CharField, DateField, DateTimeField, ForeignKey, IntegerField,
-    Model, TextField, ManyToManyField, CASCADE, ImageField, SET_NULL
+    Model, TextField, ManyToManyField, CASCADE, ImageField, SET_NULL, BooleanField
 )
 
 """
@@ -121,13 +121,19 @@ class User(Model):
         return f"{self.username}({self.email})"
 
 
-"heslojeveslo"
-
-
 class Review(Model):
     user = ForeignKey(User, on_delete=CASCADE)
     movie = ForeignKey(Movie, on_delete=CASCADE)
     review = TextField(null=True)
     rating = IntegerField(null=True)
+    created = DateTimeField(auto_now_add=True, null=True)
+    updated = DateTimeField(auto_now_add=True, null=True)
+
+
+class MoviesPremiere(Model):
+    place = CharField(max_length=512)
+    date_and_time = DateTimeField(null=True)
+    movie = ForeignKey(Movie, on_delete=DO_NOTHING)
+    cinema = BooleanField()
     created = DateTimeField(auto_now_add=True, null=True)
     updated = DateTimeField(auto_now_add=True, null=True)

@@ -8,7 +8,7 @@ from django.urls import reverse_lazy
 
 from .forms import RegistrationForm, MovieForm, ActorForm
 
-from viewer.models import Movie, Actor, Director
+from viewer.models import Movie, Actor, Director, MoviesPremiere
 from django.contrib.auth.models import User, Group
 
 from django.views.generic import TemplateView, ListView, DetailView, FormView, CreateView, UpdateView, DeleteView
@@ -18,6 +18,13 @@ from django.views.generic import TemplateView, ListView, DetailView, FormView, C
 def hello(request, parametr):
     return HttpResponse(f"Hello, {parametr} World!")
 
+# GET a POST požadavkem?
+# V jakých situacích který použít?
+
+# Http (80) vs Https (443)
+# Co je to port? - Brána (Teleport) / Proč tam ta brána musí být?
+
+# Jaký je název protokolu, který se stará o překlad adres (3 písmena) DNS
 
 def ahoj(request):
     seznam_hodnot = ["ahoj", "čau", "nazdar"]
@@ -110,6 +117,11 @@ class MovieDetailView(DetailView):
     model = Movie
 
     template_name = "movies/detail.html"
+
+class MoviePremiereView(ListView):
+    model = MoviesPremiere
+
+    template_name = "movie_premiere/index.html"
 
 # Změnit success url, chceme se vrátit zpět na editovaný film (záznam)
 class MovieUpdateView(PermissionRequiredMixin, UpdateView):

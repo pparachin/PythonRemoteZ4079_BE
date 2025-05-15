@@ -26,7 +26,7 @@ from viewer.views import (hello, ahoj, index, movie_index,
                           actor_detail, director_detail, MovieView, MovieDetailView,
                           ActorView, ActorDetailView, ProfileView, RegistrationView,
                           MovieCreateView, ActorCreateView, MovieUpdateView, MovieDeleteView,
-                          ActorUpdateView, ActorDeleteView)
+                          ActorUpdateView, ActorDeleteView, MoviePremiereView)
 
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
@@ -114,6 +114,9 @@ urlpatterns = i18n_patterns(
     # JWT Token - Obtain and Refresh
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+
+    # Movie Premiere
+    path("filmove_premiery/", MoviePremiereView.as_view(), name="movie_premieres")
 )
 
 if settings.DEBUG:
